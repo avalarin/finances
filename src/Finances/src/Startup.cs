@@ -61,7 +61,8 @@ namespace Finances {
             databaseInititalizer.Initialize().Wait();
 
             app.UseStaticFiles();
-            app.UseApiAuthentication(new ApiAuthenticationOptions() {
+            
+            app.UseTokenAuthentication(new TokenAuthenticationOptions() {
                 AutomaticAuthenticate = true
             });
 

@@ -8,12 +8,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Finances.Middlewares.Authentication {
-    public class ApiAuthenticationMiddleware : AuthenticationMiddleware<ApiAuthenticationOptions> {
+    public class TokenAuthenticationMiddleware : AuthenticationMiddleware<TokenAuthenticationOptions> {
         private readonly ISessionStore _sessionStore;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ApiAuthenticationMiddleware(RequestDelegate next, 
-                                           IOptions<ApiAuthenticationOptions> options, 
+        public TokenAuthenticationMiddleware(RequestDelegate next, 
+                                           IOptions<TokenAuthenticationOptions> options, 
                                            ILoggerFactory loggerFactory,
                                            ISessionStore sessionStore,
                                            SignInManager<ApplicationUser> signInManager,
@@ -26,12 +26,12 @@ namespace Finances.Middlewares.Authentication {
             }
 
             if (string.IsNullOrWhiteSpace(Options.AuthenticationScheme)) {
-                Options.AuthenticationScheme = "Headers";
+                Options.AuthenticationScheme = "Token";
             }
         }
 
-        protected override AuthenticationHandler<ApiAuthenticationOptions> CreateHandler() {
-            return new ApiAuthenticationHandler(_sessionStore, _signInManager);
+        protected override AuthenticationHandler<TokenAuthenticationOptions> CreateHandler() {
+            return new TokenAuthenticationHandler(_sessionStore, _signInManager);
         }
     }
 }

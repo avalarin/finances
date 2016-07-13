@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Primitives;
 
 namespace Finances.Middlewares.Authentication {
-    public class ApiAuthenticationHandler : AuthenticationHandler<ApiAuthenticationOptions> {
+    public class TokenAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions> {
 
         private readonly ISessionStore _sessionStore;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ApiAuthenticationHandler(ISessionStore sessionStore, SignInManager<ApplicationUser> signInManager) {
+        public TokenAuthenticationHandler(ISessionStore sessionStore, SignInManager<ApplicationUser> signInManager) {
             _sessionStore = sessionStore;
             _signInManager = signInManager;
         }
@@ -42,7 +42,6 @@ namespace Finances.Middlewares.Authentication {
             
             var ticket = new AuthenticationTicket(principal, authProperties, Options.AuthenticationScheme);
             return AuthenticateResult.Success(ticket);
-
         }
     }
 }

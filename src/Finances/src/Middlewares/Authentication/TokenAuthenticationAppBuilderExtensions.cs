@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 
 namespace Finances.Middlewares.Authentication {
-    public static class ApiAppBuilderExtensions {
-        public static IApplicationBuilder UseApiAuthentication(this IApplicationBuilder app) {
+    public static class TokenAuthenticationAppBuilderExtensions {
+        public static IApplicationBuilder UseTokenAuthentication(this IApplicationBuilder app) {
             if (app == null) {
                 throw new ArgumentNullException(nameof(app));
             }
 
-            return app.UseMiddleware<ApiAuthenticationMiddleware>();
+            return app.UseMiddleware<TokenAuthenticationMiddleware>();
         }
 
-        public static IApplicationBuilder UseApiAuthentication(this IApplicationBuilder app, ApiAuthenticationOptions options) {
+        public static IApplicationBuilder UseTokenAuthentication(this IApplicationBuilder app, TokenAuthenticationOptions options) {
             if (app == null) {
                 throw new ArgumentNullException(nameof(app));
             }
@@ -20,7 +20,7 @@ namespace Finances.Middlewares.Authentication {
                 throw new ArgumentNullException(nameof(options));
             }
 
-            return app.UseMiddleware<ApiAuthenticationMiddleware>(Options.Create(options));
+            return app.UseMiddleware<TokenAuthenticationMiddleware>(Options.Create(options));
         }
     }
 }
