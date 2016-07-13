@@ -9,15 +9,26 @@ using Microsoft.Extensions.Primitives;
 namespace Finances.Middlewares.Authentication {
     public class TokenAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions> {
 
+        public const string SessionIdItemKey = "SessionId";
+
         private readonly ISessionStore _sessionStore;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private Task<AuthenticateResult> _readHeaderTask;
 
         public TokenAuthenticationHandler(ISessionStore sessionStore, SignInManager<ApplicationUser> signInManager) {
             _sessionStore = sessionStore;
             _signInManager = signInManager;
         }
 
-        protected async override Task<AuthenticateResult> HandleAuthenticateAsync() {
+
+        private Task<AuthenticateResult> EnsureTicket() {
+            if (_readHeaderTask == null) {
+                _readHeaderTask = ReadTicket();
+            }
+            return _readHeaderTask;
+        }
+
+        private async Task<AuthenticateResult> ReadTicket() {
             StringValues values;
             Request.Headers.TryGetValue(Options.HeaderName, out values);
 
@@ -39,9 +50,17 @@ namespace Finances.Middlewares.Authentication {
 
             var principal = await _signInManager.CreateUserPrincipalAsync(session.User);
             var authProperties = new AuthenticationProperties();
-            
+            authProperties.Items[SessionIdItemKey] = headerValue;
+
             var ticket = new AuthenticationTicket(principal, authProperties, Options.AuthenticationScheme);
             return AuthenticateResult.Success(ticket);
+        }
+
+
+        protected async override Task<AuthenticateResult> HandleAuthenticateAsync() {
+            var ticket = await EnsureTicket();
+
+            return ticket;
         }
     }
 }
