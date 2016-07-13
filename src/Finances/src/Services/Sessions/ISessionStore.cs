@@ -8,5 +8,6 @@ namespace Finances.Services.Sessions {
 
         Task<Session> CreateSessionForUser(string user, bool persistent);
 
+        Task CloseSession(string sessionId);
     }
 }

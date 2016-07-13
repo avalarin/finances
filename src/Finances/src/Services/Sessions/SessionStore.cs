@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Finances.Data;
 using Finances.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Finances.Services.Sessions {
@@ -73,6 +72,18 @@ namespace Finances.Services.Sessions {
 
                 return session;
             }
+        }
+
+        public async Task CloseSession(string sessionId) {
+            if (string.IsNullOrWhiteSpace(sessionId)) {
+                throw new ArgumentException("Cannot find session: session id cannot be empty or null", nameof(sessionId));
+            }
+
+            var session = await _database.Sessions.GetActualById(sessionId);
+
+            session.ClosedAt = DateTime.Now;
+
+            await _database.SaveChangesAsync();
         }
     }
 }
