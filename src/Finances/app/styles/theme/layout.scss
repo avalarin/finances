@@ -1,0 +1,23 @@
+.app-layout {
+    width: 1170px;
+    margin: 50px auto;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .app-layout__sidebar {
+        width: 25%;
+        float: left;
+        padding: 0 15px;
+        // background: rgba(0, 0, 255, 0.1);
+    }
+
+    .app-layout__content {
+        width: 75%;
+        float: right;
+        padding: 0 15px;
+        // background: rgba(255, 0, 0, 0.1);
+    }
+
+}

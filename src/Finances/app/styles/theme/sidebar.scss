@@ -1,0 +1,47 @@
+.app-sidebar {
+    .app-sidebar__brandname {
+        font-size: 24px;
+            /* line-height: 40px; */
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+
+
+
+        a {
+            color: $text-color-primary;
+            text-decoration: none;
+        }
+    }
+
+    .app-sidebar__link {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 0;
+        border-radius: 2px;
+        line-height: 36px;
+        vertical-align: middle;
+        font-weight: 500;
+
+        color: $text-color-primary;
+
+        // transition: box-shadow 0.2s $animation-curve-fast-out-linear-in,
+        //             background-color 0.2s $animation-curve-default,
+        //             color 0.2s $animation-curve-default;
+
+        // &:hover {
+        //     background-color: $button-hover-color;
+        // }
+        //
+        // &:active {
+        //     background-color: $button-active-color;
+        // }
+
+        &.app-sidebar__link--active {
+            color: $text-color-accent;
+            font-weight: bold;
+        }
+    }
+}

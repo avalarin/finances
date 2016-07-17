@@ -69,7 +69,7 @@ namespace Finances {
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
-                    template: "app",
+                    template: "{*path}",
                     defaults: new { controller = "App", action = "Index" });
             });
         }
