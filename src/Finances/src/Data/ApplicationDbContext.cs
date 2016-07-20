@@ -19,6 +19,8 @@ namespace Finances.Data {
 
         public DbSet<Wallet> Wallets { get; set; }
         
+        public DbSet<Currency> Currencies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
@@ -33,6 +35,8 @@ namespace Finances.Data {
             builder.Entity<BookUser>().HasIndex(m => m.UserId);
 
             builder.Entity<Wallet>().HasIndex("BookId");
+
+            builder.Entity<Currency>().HasIndex("Code", "BookId");
         }
     }
 }
