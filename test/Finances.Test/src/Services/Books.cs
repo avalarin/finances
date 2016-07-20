@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Xunit;
 
 namespace Finances.Test.Services {
-
-    public class Books : IClassFixture<DatabaseFixture> {
-        private DatabaseFixture DbFixture { get; }
-
-        public Books(DatabaseFixture fixture) {
-            DbFixture = fixture;
+    public class Books : TestsBase {
+        public Books(DatabaseFixture fixture) : base(fixture) {
         }
 
         [Fact]
