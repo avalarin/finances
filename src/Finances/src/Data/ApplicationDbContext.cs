@@ -61,6 +61,16 @@ namespace Finances.Data {
             builder.Entity<Operation>().HasIndex("TransactionId");
 
             builder.Entity<ProductOperation>().HasIndex("OperationId");
+
+            builder.Entity<TransactionTag>().HasKey(t => new {t.TagId, t.TransactionId});
+            builder.Entity<TransactionTag>()
+                .HasOne(tt => tt.Tag)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(tt => tt.TagId);
+            builder.Entity<TransactionTag>()
+                .HasOne(tt => tt.Transaction)
+                .WithMany(t => t.Tags)
+                .HasForeignKey(tt => tt.TransactionId);
         }
     }
 }

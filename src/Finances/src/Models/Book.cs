@@ -67,6 +67,8 @@ namespace Finances.Models {
         [MaxLength(100)]
         public string Text { get; set; }
 
+        public ICollection<TransactionTag> Transactions { get; set; }
+
     }
 
     public class Transaction {
@@ -81,6 +83,22 @@ namespace Finances.Models {
         public ApplicationUser CreatedBy { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public ICollection<TransactionTag> Tags { get; set; }
+
+    }
+
+    public class TransactionTag {
+
+        public int TransactionId { get; set; }
+
+        [Required]
+        public Transaction Transaction { get; set; }
+
+        public int TagId { get; set; }
+
+        [Required]
+        public Tag Tag { get; set; }
 
     }
 
