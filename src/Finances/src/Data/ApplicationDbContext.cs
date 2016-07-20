@@ -25,6 +25,8 @@ namespace Finances.Data {
 
         public DbSet<Tag> Tags { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
@@ -45,6 +47,8 @@ namespace Finances.Data {
             builder.Entity<Unit>().HasIndex("Code", "BookId");
 
             builder.Entity<Tag>().HasIndex("BookId");
+
+            builder.Entity<Product>().HasIndex("BookId");
         }
     }
 }
