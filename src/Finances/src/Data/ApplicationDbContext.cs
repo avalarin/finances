@@ -13,6 +13,10 @@ namespace Finances.Data {
 
         public DbSet<Session> Sessions { get; set; }
 
+        public DbSet<Book> Books { get; set; }
+
+        public DbSet<BookUser> BooksUsers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
@@ -23,6 +27,8 @@ namespace Finances.Data {
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+
+            builder.Entity<BookUser>().HasIndex(m => m.UserId);
         }
     }
 }
