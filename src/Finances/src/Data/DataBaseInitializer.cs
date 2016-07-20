@@ -21,6 +21,7 @@ namespace Finances.Data {
 
             await EnsureAdminExists();
             await EnsureCurrenciesExists();
+            await EnsureUnitsExists();
         }
 
         private async Task EnsureAdminExists() {
@@ -66,5 +67,19 @@ namespace Finances.Data {
             await _database.SaveChangesAsync();
         }
 
+        private async Task EnsureUnitsExists() {
+            await EnsureUnitExists("metre", 2);
+            await EnsureUnitExists("kilogram", 2);
+            await EnsureUnitExists("gram", 2);
+            await EnsureUnitExists("piece", 0);
+            await _database.SaveChangesAsync();
+        }
+
+        private async Task EnsureUnitExists(string code, int decimals) {
+            var unit = await _database.Units.GetGlobalByCode(code);
+            if (unit != null) return;
+            unit = new Unit() { Code = code, Decimals = decimals };
+            _database.Units.Add(unit);
+        }
     }
 }

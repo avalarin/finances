@@ -31,6 +31,10 @@ namespace Finances.Data {
 
         public static Task<Currency> GetGlobalByCode(this IQueryable<Currency> set, string code) {
             return set.FirstOrDefaultAsync(c => c.Book == null && c.Code == code);
-        } 
+        }
+
+        public static Task<Unit> GetGlobalByCode(this IQueryable<Unit> set, string code) {
+            return set.FirstOrDefaultAsync(c => c.Book == null && c.Code == code);
+        }
     }
 }
