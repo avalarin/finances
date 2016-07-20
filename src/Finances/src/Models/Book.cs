@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Finances.Models {
     public class Book {
@@ -81,8 +82,6 @@ namespace Finances.Models {
 
         public DateTime CreatedAt { get; set; }
 
-        public ICollection<Tag> Tags { get; set; } 
-
     }
 
     public class Product {
@@ -123,17 +122,20 @@ namespace Finances.Models {
 
         public decimal? ExchangeRate { get; set; }
 
-       public ProductOperation ProductOperation { get; set; }
+        public ProductOperation ProductOperation { get; set; }
 
     }
 
     public class ProductOperation {
 
         [Key]
+        [ForeignKey("Operation")]
         public int Id { get; set; }
 
         [Required]
         public Operation Operation { get; set; }
+
+        public int OperationId { get; set; }
 
         [Required]
         public Product Product { get; set; }
