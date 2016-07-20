@@ -17,6 +17,8 @@ namespace Finances.Data {
 
         public DbSet<BookUser> BooksUsers { get; set; }
 
+        public DbSet<Wallet> Wallets { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
@@ -29,6 +31,8 @@ namespace Finances.Data {
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
             builder.Entity<BookUser>().HasIndex(m => m.UserId);
+
+            builder.Entity<Wallet>().HasIndex("BookId");
         }
     }
 }
