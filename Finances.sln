@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9ED64EED-E48E-4D1B-B396-F49FBBDBB27A}"
 EndProject
@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Finances", "src\Finances\Finances.xproj", "{DC92049F-89CD-47B3-9E41-3EC73F7278B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{00D1A781-CE13-449B-A97C-A9804D1C1BAC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Finances.Test", "test\Finances.Test\Finances.Test.xproj", "{868B1EDF-6014-4C92-99BC-4847F2F144A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,11 +26,16 @@ Global
 		{DC92049F-89CD-47B3-9E41-3EC73F7278B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC92049F-89CD-47B3-9E41-3EC73F7278B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC92049F-89CD-47B3-9E41-3EC73F7278B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868B1EDF-6014-4C92-99BC-4847F2F144A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868B1EDF-6014-4C92-99BC-4847F2F144A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868B1EDF-6014-4C92-99BC-4847F2F144A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868B1EDF-6014-4C92-99BC-4847F2F144A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DC92049F-89CD-47B3-9E41-3EC73F7278B6} = {9ED64EED-E48E-4D1B-B396-F49FBBDBB27A}
+		{868B1EDF-6014-4C92-99BC-4847F2F144A3} = {00D1A781-CE13-449B-A97C-A9804D1C1BAC}
 	EndGlobalSection
 EndGlobal
