@@ -23,6 +23,8 @@ namespace Finances.Data {
 
         public DbSet<Unit> Units { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
@@ -41,6 +43,8 @@ namespace Finances.Data {
             builder.Entity<Currency>().HasIndex("Code", "BookId");
 
             builder.Entity<Unit>().HasIndex("Code", "BookId");
+
+            builder.Entity<Tag>().HasIndex("BookId");
         }
     }
 }
