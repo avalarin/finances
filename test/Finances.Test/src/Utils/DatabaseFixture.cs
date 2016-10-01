@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Finances.Data;
 using Finances.Models;
@@ -29,8 +29,10 @@ namespace Finances.Test.Utils {
                     keyNormalizer: new UpperInvariantLookupNormalizer(), 
                     errors: null,
                     services: null,
-                    logger: new TestLogger<UserManager<ApplicationUser>>()
+                    logger: null
                 );
+
+                
 
                 var initializer = new DatabaseInititalizer(context, userManager);
                 initializer.Initialize().Wait();

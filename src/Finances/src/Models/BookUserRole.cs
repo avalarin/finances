@@ -1,7 +1,7 @@
 namespace Finances.Models {
     public enum BookUserRole {
-        Guest = 0,
-        Member = 1,
-        Administrator = 2
+        Guest = 1,
+        Member = 2,
+        Administrator = 3
     }
 }

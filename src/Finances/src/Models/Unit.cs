@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Finances.Models {
     public class Unit {
 
         [Key]
         public int Id { get; set; }
+
+        public int? BookId { get; set; }
 
         public Book Book { get; set; }
 
