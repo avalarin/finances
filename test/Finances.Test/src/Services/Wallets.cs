@@ -24,7 +24,7 @@ namespace Finances.Test.Services {
             Assert.Equal(0, Db.Wallets.Count());
 
             var book = _bookStore.CreateBook("Admin").Result;
-            var wallet = _walletStore.CreateWallet(book.BookUser.Id, "Admin").Result.Wallet;
+            var wallet = _walletStore.CreateWallet(book.BookUser.BookId, "Admin").Result.Wallet;
 
             Assert.Equal(1, Db.Wallets.Count());
 

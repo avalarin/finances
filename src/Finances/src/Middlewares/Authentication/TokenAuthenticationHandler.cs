@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Finances.Models;
 using Finances.Services.Sessions;
+using Finances.Web.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +10,6 @@ using Microsoft.Extensions.Primitives;
 
 namespace Finances.Middlewares.Authentication {
     public class TokenAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions> {
-
-        public const string SessionIdItemKey = "SessionId";
-
         private readonly ISessionStore _sessionStore;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private Task<AuthenticateResult> _readHeaderTask;
@@ -49,8 +48,9 @@ namespace Finances.Middlewares.Authentication {
             }
 
             var principal = await _signInManager.CreateUserPrincipalAsync(session.User);
+
             var authProperties = new AuthenticationProperties();
-            authProperties.Items[SessionIdItemKey] = headerValue;
+            authProperties.Items[Constants.SessionIdItemKey] = headerValue;
 
             var ticket = new AuthenticationTicket(principal, authProperties, Options.AuthenticationScheme);
             return AuthenticateResult.Success(ticket);

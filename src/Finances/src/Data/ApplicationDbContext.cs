@@ -1,6 +1,8 @@
 ﻿using Finances.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Linq;
 
 namespace Finances.Data {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
@@ -18,8 +20,6 @@ namespace Finances.Data {
         public DbSet<BookUser> BooksUsers { get; set; }
 
         public DbSet<Wallet> Wallets { get; set; }
-        
-        public DbSet<Currency> Currencies { get; set; }
 
         public DbSet<Unit> Units { get; set; }
 
@@ -34,8 +34,6 @@ namespace Finances.Data {
         public DbSet<ProductOperation> ProductOperations { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder builder) {
-            base.OnModelCreating(builder);
-
             builder.Entity<ApplicationUser>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Roles");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
@@ -47,8 +45,6 @@ namespace Finances.Data {
             builder.Entity<BookUser>().HasIndex(m => m.UserId);
 
             builder.Entity<Wallet>().HasIndex("BookId");
-
-            builder.Entity<Currency>().HasIndex("Code", "BookId");
 
             builder.Entity<Unit>().HasIndex("Code", "BookId");
 
@@ -70,7 +66,14 @@ namespace Finances.Data {
             builder.Entity<TransactionTag>()
                 .HasOne(tt => tt.Transaction)
                 .WithMany(t => t.Tags)
-                .HasForeignKey(tt => tt.TransactionId);
+                .HasForeignKey(tt => tt.TransactionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            base.OnModelCreating(builder);
         }
     }
 }

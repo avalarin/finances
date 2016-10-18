@@ -13,11 +13,11 @@ namespace Finances.Models {
         public Wallet Wallet { get; set; }
 
         [Required]
-        public Currency Currency { get; set; }
+        public int Currency { get; set; }
 
         public decimal Amount { get; set; }
         
-        public Currency OriginalCurrency { get; set; }
+        public int? OriginalCurrency { get; set; }
 
         public decimal? OriginalAmount { get; set; }
 

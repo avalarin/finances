@@ -1,6 +1,7 @@
 ﻿using System.Text.Encodings.Web;
 using Finances.Models;
 using Finances.Services.Sessions;
+using Finances.Web.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,7 @@ namespace Finances.Middlewares.Authentication {
             }
 
             if (string.IsNullOrWhiteSpace(Options.AuthenticationScheme)) {
-                Options.AuthenticationScheme = "Token";
+                Options.AuthenticationScheme = Constants.TokenAuthenticationScheme;
             }
         }
 

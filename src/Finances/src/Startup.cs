@@ -2,6 +2,7 @@
 using Finances.Middlewares.Authentication;
 using Finances.Models;
 using Finances.Services.Sessions;
+using Finances.Web.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -38,6 +39,7 @@ namespace Finances {
                 });
 
             services.AddTransient<ISessionStore, SessionStore>();
+            services.AddTransient<ISessionAccessor, SessionAccessor>();
 
             services.AddSingleton<DatabaseInititalizer>();
         }

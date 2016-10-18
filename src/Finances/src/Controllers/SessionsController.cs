@@ -2,48 +2,51 @@
 using Finances.Models;
 using Finances.Models.SessionsModels;
 using Finances.Services.Sessions;
+using Finances.Web.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Finances.Controllers {
     [Route("api/sessions")]
     public class SessionsController : Controller {
 
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ISessionStore _sessionStore;
-        private readonly ILogger _logger;
+        private readonly ISessionAccessor _sessionAccessor;
 
         public SessionsController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             ISessionStore sessionStore,
-            ILogger<SessionsController> logger) {
+            ISessionAccessor sessionAccessor) {
 
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            _sessionAccessor = sessionAccessor;
             _sessionStore = sessionStore;
         }
 
+        [Route("current")]
+        public async Task<SessionResponseModel> Get() {
+            var session = await _sessionAccessor.GetSession(HttpContext);
+            return new SessionResponseModel(session);
+        }
+
         [HttpPost]
-        public async Task<CreateSessionResponseModel> Post([FromBody] CreateSessionRequestModel model) {
+        public async Task<SessionResponseModel> Post([FromBody] CreateSessionRequestModel model) {
             if (!ModelState.IsValid) {
-                return new CreateSessionResponseModel(CreateSessionStatus.Failed);
+                return new SessionResponseModel(CreateSessionStatus.Failed);
             }
 
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null) {
-                return new CreateSessionResponseModel(CreateSessionStatus.InvalidNameOrPassword);
+                return new SessionResponseModel(CreateSessionStatus.InvalidNameOrPassword);
             }
 
             if (!await _userManager.CheckPasswordAsync(user, model.Password)) {
-                return new CreateSessionResponseModel(CreateSessionStatus.InvalidNameOrPassword);
+                return new SessionResponseModel(CreateSessionStatus.InvalidNameOrPassword);
             }
 
             var session = await _sessionStore.CreateSessionForUser(model.UserName, true);
 
-            return new CreateSessionResponseModel(session);
+            return new SessionResponseModel(session);
         }
 
     }
