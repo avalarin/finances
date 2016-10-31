@@ -14,7 +14,7 @@ namespace Finances.Test.Services {
 
         public DbTestsBase(ITestOutputHelper outputHelper) {
             _outputHelper = outputHelper;
-            Db = DbHelper.CreateDbContext(CreateLogger<UserManager<ApplicationUser>>());
+            Db = DbHelper.CreateDbContext(new LoggerFactory(_outputHelper));
         }
 
         protected ILogger<T> CreateLogger<T>() {
@@ -23,6 +23,26 @@ namespace Finances.Test.Services {
 
         public virtual void Dispose() {
             Db.Dispose();
+        }
+        
+        public class LoggerFactory : ILoggerFactory {
+            private readonly ITestOutputHelper _outputHelper;
+
+            public LoggerFactory(ITestOutputHelper outputHelper) {
+                _outputHelper = outputHelper;
+            }
+
+            public void Dispose() {
+                throw new NotImplementedException();
+            }
+
+            public ILogger CreateLogger(string categoryName) {
+                return new TestLogger(_outputHelper);
+            }
+
+            public void AddProvider(ILoggerProvider provider) {
+                throw new NotImplementedException();
+            }
         }
     }
 }

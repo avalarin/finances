@@ -6,8 +6,13 @@ namespace Finances.Models {
         [Key]
         public int Id { get; set; }
 
+        public int BookId { get; set; }
+
         [Required]
         public Book Book { get; set; }
 
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
+        public string Name { get; set; }
     }
 }

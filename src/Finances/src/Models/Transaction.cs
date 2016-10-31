@@ -16,6 +16,8 @@ namespace Finances.Models {
 
         public DateTime CreatedAt { get; set; }
 
+        public ICollection<Operation> Operations { get; set; }
+
         public ICollection<TransactionTag> Tags { get; set; }
 
     }

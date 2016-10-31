@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Finances.Models;
-using Finances.Models.SessionsModels;
 using Finances.Services.Sessions;
 using Finances.Web.Authentication;
+using Finances.WebModels.SessionsModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +25,9 @@ namespace Finances.Controllers {
 
         [Route("current")]
         public async Task<SessionResponseModel> Get() {
+            if (!User.Identity.IsAuthenticated) {
+                return new SessionResponseModel(CreateSessionStatus.Unauthenticated);
+            }
             var session = await _sessionAccessor.GetSession(HttpContext);
             return new SessionResponseModel(session);
         }

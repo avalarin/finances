@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Finances.Test.Utils {
     public static class DbHelper {
 
-        public static ApplicationDbContext CreateDbContext(ILogger<UserManager<ApplicationUser>> logger) {
+        public static ApplicationDbContext CreateDbContext(ILoggerFactory loggerFactory) {
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             dbContextOptionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContextOptions = dbContextOptionsBuilder.Options;
@@ -28,7 +28,7 @@ namespace Finances.Test.Utils {
                     keyNormalizer: new UpperInvariantLookupNormalizer(),
                     errors: null,
                     services: null,
-                    logger: logger
+                    logger: loggerFactory.CreateLogger<UserManager<ApplicationUser>>()
                     );
 
                 new DatabaseInititalizer(context, userManager).Initialize().Wait();

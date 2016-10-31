@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Finances.Models.SessionsModels {
+namespace Finances.WebModels.SessionsModels {
     public class CreateSessionRequestModel {
          
         [Required]

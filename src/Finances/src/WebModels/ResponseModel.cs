@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Finances.Models {
+namespace Finances.WebModels {
     public abstract class ResponseModel<TStatus> {
         [JsonIgnore]
         public TStatus Status { get; }

@@ -6,24 +6,24 @@ namespace Finances.Models {
         [Key]
         public int Id { get; set; }
 
+        public int TransactionId { get; set; }
+
         [Required]
         public Transaction Transaction { get; set; }
 
-        [Required]
-        public Wallet Wallet { get; set; }
+        public int WalletId { get; set; }
 
-        [Required]
         public int Currency { get; set; }
 
         public decimal Amount { get; set; }
-        
-        public int? OriginalCurrency { get; set; }
 
-        public decimal? OriginalAmount { get; set; }
+        public int ProductId { get; set; }
 
-        public decimal? ExchangeRate { get; set; }
+        public Product Product { get; set; }
 
-        public ProductOperation ProductOperation { get; set; }
+        public decimal? Price { get; set; }
+
+        public decimal? Count { get; set; }
 
     }
 }

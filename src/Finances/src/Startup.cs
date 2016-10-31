@@ -1,14 +1,21 @@
 ﻿using Finances.Data;
 using Finances.Middlewares.Authentication;
+using Finances.Middlewares.Errors;
 using Finances.Models;
+using Finances.Services.Books;
 using Finances.Services.Sessions;
+using Finances.Services.Users;
+using Finances.Services.Wallets;
 using Finances.Web.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 
@@ -33,13 +40,24 @@ namespace Finances {
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors(options => {
+                options.AddPolicy("AllowSpecificOrigin", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             services.AddMvc()
                 .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
+            services.Configure<MvcOptions>(options => {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+            });
+            
             services.AddTransient<ISessionStore, SessionStore>();
             services.AddTransient<ISessionAccessor, SessionAccessor>();
+            services.AddTransient<IAppUserStore, AppUserStore>();
+            services.AddTransient<IBookStore, BookStore>();
+            services.AddTransient<IWalletStore, WalletStore>();
 
             services.AddSingleton<DatabaseInititalizer>();
         }
@@ -52,13 +70,9 @@ namespace Finances {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment()) {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseHandleErrorsMiddleware(new HandleErrorsMiddlewareOptions() {
+                EnableStackTrace = env.IsDevelopment()
+            });
 
             databaseInititalizer.Initialize().Wait();
 
@@ -67,6 +81,8 @@ namespace Finances {
             app.UseTokenAuthentication(new TokenAuthenticationOptions() {
                 AutomaticAuthenticate = true
             });
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseMvc(routes => {
                 routes.MapRoute(

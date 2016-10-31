@@ -1,6 +1,7 @@
 ﻿using System;
+using Finances.Models;
 
-namespace Finances.Models.SessionsModels {
+namespace Finances.WebModels.SessionsModels {
     public class SessionResponseModel : ResponseModel<CreateSessionStatus> {
 
         public SessionResponseModel(CreateSessionStatus status) : base(status) {

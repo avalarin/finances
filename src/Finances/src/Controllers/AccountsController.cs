@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Finances.Data;
 using Finances.Models;
+using Finances.WebModels.AccountsModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features.Authentication;
@@ -23,10 +24,10 @@ namespace Finances.Controllers {
         } 
 
         [HttpGet]
-        public async Task<Models.AccountsModels.User[]> Get() {
+        public async Task<User[]> Get() {
             var users = await _database.Users.ToArrayAsync();
 
-            return users.Select(Models.AccountsModels.User.FromApplicationUser).ToArray();
+            return users.Select(WebModels.AccountsModels.User.FromApplicationUser).ToArray();
         } 
     }
 }

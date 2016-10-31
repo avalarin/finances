@@ -1,4 +1,6 @@
-﻿namespace Finances.Models.AccountsModels {
+﻿using Finances.Models;
+
+namespace Finances.WebModels.AccountsModels {
     public class User {
         public string Name { get; set; }
 

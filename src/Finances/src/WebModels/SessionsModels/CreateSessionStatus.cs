@@ -1,8 +1,9 @@
-﻿namespace Finances.Models.SessionsModels {
+﻿namespace Finances.WebModels.SessionsModels {
     public enum CreateSessionStatus {
         Success,
         InvalidNameOrPassword,
         PermissionDenied,
-        Failed
+        Failed,
+        Unauthenticated
     }
 }

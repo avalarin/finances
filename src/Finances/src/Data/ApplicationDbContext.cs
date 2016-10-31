@@ -31,9 +31,9 @@ namespace Finances.Data {
 
         public DbSet<Operation> Operations { get; set; }
 
-        public DbSet<ProductOperation> ProductOperations { get; set; } 
-
         protected override void OnModelCreating(ModelBuilder builder) {
+            base.OnModelCreating(builder);
+
             builder.Entity<ApplicationUser>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Roles");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
@@ -55,8 +55,7 @@ namespace Finances.Data {
             builder.Entity<Transaction>().HasIndex("BookId", "CreatedAt");
 
             builder.Entity<Operation>().HasIndex("TransactionId");
-
-            builder.Entity<ProductOperation>().HasIndex("OperationId");
+            builder.Entity<Operation>().HasIndex(o => o.WalletId);
 
             builder.Entity<TransactionTag>().HasKey(t => new {t.TagId, t.TransactionId});
             builder.Entity<TransactionTag>()
@@ -72,8 +71,6 @@ namespace Finances.Data {
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            base.OnModelCreating(builder);
         }
     }
 }

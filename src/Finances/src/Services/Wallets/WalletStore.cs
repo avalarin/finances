@@ -1,25 +1,37 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Finances.Data;
 using Finances.Models;
 using Finances.Services.Books;
 using Finances.Services.Users;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Finances.Services.Wallets {
-    public class WalletStore {
+    public class WalletStore : IWalletStore {
         private ApplicationDbContext DataBase { get; }
-        private AppUserStore UserStore { get; }
-        private BookStore BookStore { get; }
+        private IAppUserStore UserStore { get; }
+        private IBookStore BookStore { get; }
         private ILogger<WalletStore> Logger { get; }
 
-        public WalletStore(ApplicationDbContext dataBase, AppUserStore userStore, BookStore bookStore, ILogger<WalletStore> logger) {
+        public WalletStore(ApplicationDbContext dataBase, IAppUserStore userStore, IBookStore bookStore, ILogger<WalletStore> logger) {
             DataBase = dataBase;
             UserStore = userStore;
             BookStore = bookStore;
             Logger = logger;
         }
 
-        public async Task<CreateWalletResult> CreateWallet(int bookId, string userName) {
+        public Task<Wallet[]> GetWallets(string userName, int bookId) {
+            var wallets = from wallet
+                            in DataBase.Wallets
+                            join userBook in DataBase.BooksUsers on wallet.BookId equals userBook.BookId
+                            where wallet.BookId == bookId && userBook.User.UserName == userName
+                          select wallet;
+
+            return wallets.ToArrayAsync();
+        }
+
+        public async Task<CreateWalletResult> CreateWallet(int bookId, string walletName, string userName) {
             var user = await UserStore.GetUser(userName);
             if (user == null) {
                 Logger.LogError($"User '{userName}' not found");
@@ -39,7 +51,8 @@ namespace Finances.Services.Wallets {
 
             
             var newWallet = new Wallet() {
-                Book = bookUser.Book
+                Book = bookUser.Book,
+                Name = walletName
             };
 
             DataBase.Wallets.Add(newWallet);

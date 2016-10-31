@@ -5,12 +5,14 @@ namespace Finances.Models {
 
         public int Id { get; set; }
 
+        public int BookId { get; set; }
+
         [Required]
         public Book Book { get; set; }
 
         [Required]
         [MaxLength(300)]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public Unit Unit { get; set; }

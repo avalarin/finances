@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+ using System.Threading.Tasks;
 using Finances.Data;
 using Finances.Models;
 using Finances.Services.Books;
@@ -44,7 +44,7 @@ namespace Finances.Services.Products {
 
             var product = new Product() {
                 Book = bookUser.Book,
-                Title = options.Title,
+                Name = options.Title,
                 Unit = unit
             };
 

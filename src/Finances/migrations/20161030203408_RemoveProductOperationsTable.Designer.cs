@@ -8,9 +8,10 @@ using Finances.Data;
 namespace Finances.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161030203408_RemoveProductOperationsTable")]
+    partial class RemoveProductOperationsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -133,7 +134,7 @@ namespace Finances.Migrations
                     b.Property<int?>("BookId")
                         .IsRequired();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 300);
 
