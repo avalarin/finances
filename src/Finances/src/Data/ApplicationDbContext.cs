@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Linq;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Finances.Data {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
@@ -33,6 +34,8 @@ namespace Finances.Data {
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
+
+            builder.HasPostgresExtension("uuid-ossp");
 
             builder.Entity<ApplicationUser>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Roles");

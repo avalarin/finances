@@ -1,4 +1,5 @@
-﻿using Finances.Data;
+﻿using System;
+using Finances.Data;
 using Finances.Middlewares.Authentication;
 using Finances.Middlewares.Errors;
 using Finances.Models;
@@ -34,8 +35,8 @@ namespace Finances {
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
-
+                options.UseNpgsql(Configuration["Data:DefaultConnection:ConnectionString"]));
+            
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

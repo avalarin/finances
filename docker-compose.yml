@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    volumes:
+      - .:/opt/finances
+    command: >
+      /bin/sh -c 
+      '
+      dotnet restore;
+      cd src/Finances;
+      dotnet watch run;
+      ' 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
