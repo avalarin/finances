@@ -67,5 +67,5 @@ export default connect((state, ownProps) => ({
 }), (dispatch, ownProps) => ({
     onRefresh: () => dispatch(loadBooks()),
     onSelectBook: (id) => dispatch(selectBook(id)),
-    onShowModal: (modalName) => dispatch(showModal({ modalName: modalName })) 
+    onShowModal: (modalName) => dispatch(showModal(modalName)) 
 }))(IndexPage);

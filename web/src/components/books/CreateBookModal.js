@@ -47,7 +47,7 @@ const ReduxForm = reduxForm({
 
 export default connect((state, ownProps) => ({
 }), (dispatch, ownProps) => ({
-    onClose: () => dispatch(hideModal({ modalName: 'createBook' }))
+    onClose: () => dispatch(hideModal('createBook'))
 }))(ReduxForm);
 
  

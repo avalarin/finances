@@ -69,5 +69,5 @@ class Modal extends Component {
 export default connect((state, ownProps) => ({
     isVisible: isVisible(state, ownProps.name)
 }), (dispatch, ownProps) => ({
-    onClose: () => dispatch(hideModal({ modalName: ownProps.name }))
+    onClose: () => dispatch(hideModal(ownProps.name))
 }))(jss(styles)(Modal));
