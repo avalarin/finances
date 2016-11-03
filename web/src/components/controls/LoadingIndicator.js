@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MDLComponent from './MDLComponent';
 import jss from 'react-jss';
 
 const styles = {
