@@ -5,7 +5,7 @@ import strings from 'strings';
 import { hideModal } from 'actions/modals';
 import Modal from 'components/controls/Modal';
 import Button from 'components/controls/Button';
-import Input from 'components/controls/Input';
+import TextInput from 'components/controls/TextInput';
 import LoadingIndicator from 'components/controls/LoadingIndicator';
 
 function submit(data, dispatch) {
@@ -19,7 +19,7 @@ class LoginForm extends Component {
 
         return <Modal name="createBook" header={strings.books.createBookModal}>
             <form id="create-book-form" onSubmit={handleSubmit(submit)}>
-                <Input label={strings.books.bookName} field={name} />
+                <TextInput label={strings.books.bookName} field={name} />
                 {error && <div>{error}</div>}
             </form>
 

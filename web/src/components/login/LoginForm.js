@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, startSubmit, stopSubmit } from 'redux-form';
 import { loginUserAsync } from 'actions/session';
-import { Button, Input } from 'components/controls/index';
+import Button from 'components/controls/Button';
+import TextInput from 'components/controls/TextInput';
 
 function submit(data, dispatch) {
     dispatch(startSubmit('login'));
@@ -25,8 +26,8 @@ class LoginForm extends Component {
            </div>
             <div className="mdl-card__supporting-text">
                 <form id="login-form" onSubmit={handleSubmit(submit)}>
-                    <Input header="Имя пользователя" field={username} />
-                    <Input header="Пароль" type="password" field={password} />
+                    <TextInput header="Имя пользователя" field={username} />
+                    <TextInput header="Пароль" type="password" field={password} />
                     {error && <div>{error}</div>}
                 </form>
             </div>
