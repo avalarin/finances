@@ -2,18 +2,24 @@ version: '2'
 services:
   db:
     image: postgres
-  web:
-    build: .
+  app:
+    build: ./app
     volumes:
-      - .:/opt/finances
-    command: >
-      /bin/sh -c 
-      '
-      dotnet restore;
-      cd src/Finances;
-      dotnet watch run;
-      ' 
+      - ./app:/opt/finances
     ports:
-      - "3000:3000"
+      - "5000:5000"
+    command: >
+      /bin/bash -c '
+      cd src/Finances;
+      dotnet watch run;'
     depends_on:
       - db
+  web: 
+    build: ./web
+    volumes:
+      - ./web:/opt/finances-web
+    ports:
+      - "8080:8080"
+    command: npm run dev-server
+    depends_on:
+      - app
