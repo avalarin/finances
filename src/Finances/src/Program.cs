@@ -12,7 +12,7 @@ namespace Finances {
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls(env["BIND_URL"] ?? "http://localhost:3000")
+                .UseUrls(env["BIND_URL"] ?? "http://0.0.0.0:5000")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
