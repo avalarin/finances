@@ -7,8 +7,12 @@ import reducers from './reducers/index';
 
 const loggerMiddleware = createLogger();
 const routerMiddleware = createRouterMiddleware(browserHistory);
-const middlewares = applyMiddleware(
+
+var middlewares = applyMiddleware(
     thunkMiddleware, routerMiddleware, loggerMiddleware);
+if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    middlewares = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(middlewares);
+}
 
 export default function configureStore(initialState) {
     return createStore(
