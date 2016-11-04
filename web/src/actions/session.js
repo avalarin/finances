@@ -16,22 +16,16 @@ export function loginUserAsync(username, password, callback) {
         login.loginUser(username, password)
             .then(s => {
                 var session = { username, session: s.session, expiresAt: s.expiresAt };
-
                 dispatch(loginUser(session));
                 dispatch(pushRoute('/'));
                 callback();
             })
-            .catch(err => {
-                console.error(err);
-                callback(err);
-            });
+            .catch(callback);
     };
 };
 
 export function logoutUserAsync() {
     return function(dispatch) {
-        localStorage.removeItem('session');
-
         dispatch(logoutUser());
         dispatch(pushRoute('/login'));
     };

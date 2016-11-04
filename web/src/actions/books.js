@@ -8,14 +8,20 @@ export const startBooksLoading = createAction(START_BOOKS_LOADING);
 export const stopBooksLoading = createAction(STOP_BOOKS_LOADING);
 
 export function loadBooks() {
-    return function(dispatch) {
+    return dispatch => {
         dispatch(startBooksLoading());
         api.books.load()
-            .then(s => {
-                dispatch(stopBooksLoading(s))
+            .then(books => dispatch(stopBooksLoading(books)));
+    };
+};
+
+export function createBook(name, callback) {
+    return dispatch => {
+        api.books.create(name)
+            .then(resp => {
+                dispatch(loadBooks());
+                callback();
             })
-            .catch(err => {
-                console.error(err);
-            });
+            .catch(callback);
     };
 };
