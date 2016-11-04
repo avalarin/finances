@@ -18,10 +18,6 @@ class IndexPage extends Component {
         this.props.onRefresh();
     }
 
-    selectBook(index) {
-
-    }
-
     render() {
         var { selected, isSelected, currentBook, books, loading, 
               onRefresh, onSelectBook, onShowModal } = this.props;
@@ -35,7 +31,7 @@ class IndexPage extends Component {
         }
 
         var currentBookContent;
-        if (!currentBook) {
+        if (!currentBook || !book) {
             currentBookContent = <div>{strings.books.notSelected}</div>;
         } else {
             currentBookContent = <div>{`Book #${book.id}`}</div>;
