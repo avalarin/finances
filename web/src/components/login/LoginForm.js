@@ -26,8 +26,8 @@ class LoginForm extends Component {
            </div>
             <div className="mdl-card__supporting-text">
                 <form id="login-form" onSubmit={handleSubmit(submit)}>
-                    <TextInput header="Имя пользователя" field={username} />
-                    <TextInput header="Пароль" type="password" field={password} />
+                    <TextInput label="Имя пользователя" field={username} />
+                    <TextInput label="Пароль" type="password" field={password} />
                     {error && <div>{error}</div>}
                 </form>
             </div>
