@@ -8,6 +8,10 @@ function getSessionId() {
     return obj.session;
 }
 
+function getBookId() {
+
+}
+
 function headers() {
     return {
         'Accept': 'application/json',
