@@ -16,8 +16,6 @@ export function loginUserAsync(username, password, callback) {
         login.loginUser(username, password)
             .then(s => {
                 var session = { username, session: s.session, expiresAt: s.expiresAt };
-                console.log(session);
-                localStorage.setItem('session', JSON.stringify(session));
 
                 dispatch(loginUser(session));
                 dispatch(pushRoute('/'));
@@ -38,14 +36,3 @@ export function logoutUserAsync() {
         dispatch(pushRoute('/login'));
     };
 };
-
-export function restoreSession() {
-    return function(dispatch) {
-        var localStorageSessionStr = localStorage.getItem('session');
-        var localStorageSession;
-        if (localStorageSessionStr) {
-            localStorageSession = JSON.parse(localStorageSessionStr);
-            dispatch(loginUser(localStorageSession));
-        }
-    }
-}
