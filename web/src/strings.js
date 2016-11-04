@@ -19,7 +19,8 @@ const strings = {
             cancel: 'Отмена'
         },
         errors: {
-            required: 'Обязательное поле'
+            required: 'Обязательное поле',
+            errorOccurred: 'Возникла непредвиденная ошибка'
         }
     }
 };

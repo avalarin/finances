@@ -1,6 +1,9 @@
-import { get } from './core';
+import { get, post } from './core';
 
 export function load() {
-    return get('/api/book')
-          .then(json => json);
-};
+    return get('/api/book');
+}
+
+export function create(name) {
+    return post('/api/book/create', { name: name });
+}

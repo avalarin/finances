@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm, startSubmit, stopSubmit } from 'redux-form';
 import strings from 'strings';
 import { hideModal } from 'actions/modals';
+import { createBook } from 'actions/books';
 import Modal from 'components/controls/Modal';
 import Button from 'components/controls/Button';
 import TextInput from 'components/controls/TextInput';
@@ -10,7 +11,14 @@ import LoadingIndicator from 'components/controls/LoadingIndicator';
 
 function submit(data, dispatch) {
     dispatch(startSubmit('createBook'));
-    setTimeout(() => dispatch(stopSubmit('createBook')), 2000);
+
+    dispatch(createBook(data.name, err => {
+        if (err) {
+            return dispatch(stopSubmit('createBook', { _error: strings.errors.errorOccurred }));
+        }
+        dispatch(stopSubmit('createBook'));
+        dispatch(hideModal('createBook'));
+    }));
 };
 
 class LoginForm extends Component {
@@ -33,7 +41,7 @@ function validate(values) {
     const errors = {};
 
     if (!values.name || values.name.trim() === '') {
-        errors.username = strings.errors.required;
+        errors.name = strings.errors.required;
     }
 
     return errors;
