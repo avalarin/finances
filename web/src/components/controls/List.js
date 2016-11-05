@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectItem } from 'actions/lists';
-import { getSelected } from 'selectors/lists';
+import { getSelected, getItems, isLoading } from 'selectors/lists';
 import jss from 'react-jss';
+import classNames from 'classnames';
+import LoadingIndicator from 'components/controls/LoadingIndicator';
 
 const styles = {
     list: {
@@ -14,26 +16,29 @@ const styles = {
         borderWidth: '1px 1px 0 1px',
         borderColor: '#e0e0e0',
         borderStyle: 'solid',
-        cursor: 'pointer',
-        '&:last-child': {
-            borderBottom: '1px #e0e0e0 solid'
-        },
-        '&.selected': {
-            background: '#eeeeee'
-        }
+        cursor: 'pointer'
+    },
+    itemLast: {
+        borderBottom: '1px #e0e0e0 solid'
+    },
+    itemSelected: {
+        background: '#eeeeee'
     }
 };
 
 class List extends Component {
     render() {
-        const { listName, selected, onSelect, items, component, emptyMessage, sheet: {classes} } = this.props;
-        if (!items.length) {
-            return <div>{emptyMessage}</div>;
-        }
+        const { listName, selected, items, loading, component, emptyMessage, sheet: {classes},
+                onSelect } = this.props;
+        if (loading) return <LoadingIndicator />;
+        if (!items.length) return <div>{emptyMessage}</div>;
         return <div className={classes.list}>
             { items.map((item, i) => {
-                var className = classes.item;
-                if (selected==i) className += ' selected';
+                var className = classNames({
+                    [classes.item]: true,
+                    [classes.itemLast]: i==items.length-1,
+                    [classes.itemSelected]: selected==i
+                });
                 return <div className={className} key={i} onClick={() => onSelect(i)}>
                     { React.createElement(component, { item: item, key: i, index: i })}
                 </div>;
@@ -43,7 +48,9 @@ class List extends Component {
 };
 
 export default connect((state, ownProps) => ({
-    selected: getSelected(state, ownProps.listName)
+    selected: getSelected(state, ownProps.listName),
+    items: getItems(state, ownProps.listName),
+    loading: isLoading(state, ownProps.listName)
 }), (dispatch, ownProps) => ({
     onSelect: (newIndex) => dispatch(selectItem({ listName: ownProps.listName, newIndex: newIndex }))
 }))(jss(styles)(List));

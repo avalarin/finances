@@ -1,17 +1,12 @@
 import { createAction } from 'redux-actions';
+import { startItemsLoading, finishItemsLoading } from 'actions/lists';
 import api from 'api/index';
-
-export const START_BOOKS_LOADING = 'START_BOOKS_LOADING';
-export const STOP_BOOKS_LOADING = 'STOP_BOOKS_LOADING';
-
-export const startBooksLoading = createAction(START_BOOKS_LOADING);
-export const stopBooksLoading = createAction(STOP_BOOKS_LOADING);
 
 export function loadBooks() {
     return dispatch => {
-        dispatch(startBooksLoading());
+        dispatch(startItemsLoading({ listName: 'books' }));
         api.books.load()
-            .then(books => dispatch(stopBooksLoading(books)));
+            .then(books => dispatch(finishItemsLoading({ listName: 'books', items: books })));
     };
 };
 
