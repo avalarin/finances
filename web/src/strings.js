@@ -10,8 +10,14 @@ const strings = {
             createBookModal: 'Создание книги',
             bookName: 'Название книги'
         },
+        wallets: {
+            noWallets: 'Кошельков нет',
+            createWalletModal: 'Создание кошелька',
+            walletName: 'Название кошелька'
+        },
         dashboard: {
-            title: 'Рабочая область'
+            title: 'Рабочая область',
+            wallets: 'Кошельки'
         },
         actions: {
             create: 'Создать',
