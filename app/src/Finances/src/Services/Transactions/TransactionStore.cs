@@ -24,6 +24,10 @@ namespace Finances.Services.Transactions {
             Logger = logger;
         }
 
+        public Task<Transaction[]> GetTransactions(int bookId, string userName) {
+            return DataBase.Transactions.ToArrayAsync();
+        }
+
         public async Task CreateTransaction(TransactionPrototype prototype) {
             using (var dbTransaction = await DataBase.Database.BeginTransactionAsync()) {
                 try {
