@@ -18,7 +18,7 @@ class IndexPage extends Component {
     }
 
     render() {
-        var { selected, isSelected, currentBook, books, loading, 
+        var { selected, isSelected, currentBook, books,
               onRefresh, onSelectBook, onShowModal } = this.props;
         var book = books.filter(b => b.id == currentBook)[0];
 
@@ -48,7 +48,6 @@ class IndexPage extends Component {
 
 export default connect((state, ownProps) => ({
     currentBook: state.session.get('book'),
-    loading: isLoading(state, 'books'),
     books: getItems(state, 'books'),
     selected: getSelected(state, 'books'),
     isSelected: hasSelection(state, 'books')

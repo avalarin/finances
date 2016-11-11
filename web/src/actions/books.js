@@ -1,4 +1,3 @@
-import { createAction } from 'redux-actions';
 import { startItemsLoading, finishItemsLoading } from 'actions/lists';
 import api from 'api/index';
 
