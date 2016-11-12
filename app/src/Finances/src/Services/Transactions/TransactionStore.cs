@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Finances.Data;
 using Finances.Exceptions;
 using Finances.Models;
+using Finances.Models.Prototypes;
 using Finances.Services.Books;
 using Finances.Services.Users;
 using Finances.Utils.Logging;

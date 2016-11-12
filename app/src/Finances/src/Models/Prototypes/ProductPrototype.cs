@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Finances.Services.Transactions {
+namespace Finances.Models.Prototypes {
     public class ProductPrototype {
 
         public String Name { get; set; }

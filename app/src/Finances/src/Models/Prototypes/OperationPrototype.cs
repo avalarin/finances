@@ -1,4 +1,4 @@
-﻿namespace Finances.Services.Transactions {
+﻿namespace Finances.Models.Prototypes {
     public class OperationPrototype {
         
         public int WalletId { get; set; }

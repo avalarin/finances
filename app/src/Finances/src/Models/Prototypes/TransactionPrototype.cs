@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Finances.Services.Transactions {
+namespace Finances.Models.Prototypes {
     public class TransactionPrototype {
         
         public int BookId { get; set; }
