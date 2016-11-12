@@ -6,6 +6,9 @@ using Finances.Services.Users;
 using Xunit;
 using Xunit.Abstractions;
 
+using static Xunit.Assert;
+using static Finances.Test.Utils.AssertErrors;
+
 namespace Finances.Test.Services {
     public class Products : DbTestsBase {
         private readonly BookStore _bookStore;
@@ -23,10 +26,8 @@ namespace Finances.Test.Services {
         [InlineData("Test1")]
         public void CreateNewProduct(string title) {
             var book = _bookStore.CreateBook("Admin").Result;
-            var unit = _unitStore.GetUnits(book.BookUser.BookId).Result.First();
-            var result = _productStore.CreateProduct(title, unit.Id, book.BookUser.BookId, "Admin").Result;
-
-            Assert.True(result.Success);
+            var unit = _unitStore.GetUnits(book.BookId).Result.First();
+            var result = _productStore.CreateProduct(title, unit.Id, book.BookId, "Admin").Result;
         }
 
     }

@@ -10,10 +10,10 @@ namespace Finances.Services.Books {
 
         Task<Book> GetBookById(int bookId);
 
-        Task<BookUserResult> CreateBook(string userName);
+        Task<BookUser> CreateBook(string userName);
 
-        Task<BookUserResult> AddUser(string targetUserName, BookUserRole role, int bookId, string userName);
+        Task<BookUser> AddUser(string targetUserName, BookUserRole role, int bookId, string userName);
 
-        Task<BookUserResult> ChangeRole(string targetUserName, BookUserRole role, int bookId, string userName);
+        Task<BookUser> ChangeRole(string targetUserName, BookUserRole role, int bookId, string userName);
     }
 }

@@ -4,7 +4,7 @@ using Finances.Models;
 namespace Finances.Services.Products {
     public interface IProductStore {
          
-         Task<CreateProductResult> CreateProduct(string title, int unitId, int bookId, string userName);
+         Task<Product> CreateProduct(string title, int unitId, int bookId, string userName);
 
          Task<Product[]> GetProducts(int book);
 

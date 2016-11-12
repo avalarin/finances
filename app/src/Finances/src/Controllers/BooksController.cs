@@ -27,11 +27,11 @@ namespace Finances.Controllers {
         public async Task<BookResponseModel> Post(CreateBookRequestModel model) {
             var result = await _bookStore.CreateBook(User.Identity.Name);
 
-            if (!result.Success) {
-                return new BookResponseModel(CreateBookStatus.CannotCreate);
-            }
+            // if (!result.Success) {
+            //     return new BookResponseModel(CreateBookStatus.CannotCreate);
+            // }
             
-            return new BookResponseModel(result.BookUser.Book);
+            return new BookResponseModel(result.Book);
         }
 
     }

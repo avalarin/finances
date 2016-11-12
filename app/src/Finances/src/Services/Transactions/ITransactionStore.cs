@@ -6,7 +6,7 @@ namespace Finances.Services.Transactions {
 
         Task<Transaction[]> GetTransactions(int bookId, string userName);
 
-        Task CreateTransaction(TransactionPrototype transaction);
+        Task<Transaction> CreateTransaction(TransactionPrototype transaction);
 
     }
 }

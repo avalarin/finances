@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
+using Finances.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -55,8 +56,18 @@ namespace Finances.Middlewares.Errors {
             using (var writer = new StreamWriter(context.Response.Body))
             using (var json = new JsonTextWriter(writer)) {
                 json.WriteStartObject();
-                json.WritePropertyName("status");
-                json.WriteValue("InternalServerError");
+                
+                var appException = exception as ApplicationException;
+                if (appException != null) {
+                    json.WritePropertyName("status");
+                    json.WriteValue(appException.Error.Name);
+                    json.WritePropertyName("message");
+                    json.WriteValue(appException.Error.Message);
+                } else {
+                    json.WritePropertyName("status");
+                    json.WriteValue("InternalServerError");
+                }
+                
                 if (_options.EnableStackTrace) {
                     json.WritePropertyName("details");
                     json.WriteValue(exception.ToString());

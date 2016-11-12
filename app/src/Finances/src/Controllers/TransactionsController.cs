@@ -21,7 +21,7 @@ namespace Finances.Controllers {
 
         [Route("create")]
         public async Task<TransactionResponseModel<CreateTransactionStatus>> Post(TransactionPrototype model) {
-            await _txnStore.CreateTransaction(model);
+            var result = await _txnStore.CreateTransaction(model);
 
             // if (!result.Success) {
             //     return new TransactionResponseModel<CreateTransactionStatus>(CreateTransactionStatus.Failed);

@@ -25,9 +25,9 @@ namespace Finances.Controllers {
         public async Task<WalletResponseModel> Post([FromBody]CreateWalletRequestModel model) {
             var result = await _walletStore.CreateWallet(model.BookId, model.WalletName, User.Identity.Name);
 
-            if (!result.Success) {
-                return new WalletResponseModel(CreateWalletStatus.CannotCreate);
-            }
+            // if (!result.Success) {
+            //     return new WalletResponseModel(CreateWalletStatus.CannotCreate);
+            // }
 
             return new WalletResponseModel();
         }

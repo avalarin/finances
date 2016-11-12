@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Finances.Data;
+using Finances.Exceptions;
 using Finances.Models;
 using Finances.Services.Books;
 using Finances.Services.Users;
+using Finances.Utils.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -28,24 +30,22 @@ namespace Finances.Services.Transactions {
             return DataBase.Transactions.ToArrayAsync();
         }
 
-        public async Task CreateTransaction(TransactionPrototype prototype) {
+        public async Task<Transaction> CreateTransaction(TransactionPrototype prototype) {
             using (var dbTransaction = await DataBase.Database.BeginTransactionAsync()) {
                 try {
                     var user = await UserStore.GetUser(prototype.UserName);
                     if (user == null) {
-                        Logger.LogError($"User '{prototype.UserName}' not found");
-                        throw new InvalidOperationException(); // TODO
+                        Logger.LogAppErrorAndThrow($"User '{prototype.UserName}' not found", ApplicationError.UserNotFound);
                     }
 
                     var bookUser = await BookStore.GetUserBook(prototype.UserName, prototype.BookId);
                     if (bookUser == null) {
-                        Logger.LogError($"Cannot create transaction: book #{prototype.BookId} not found or user has no access to this book");
-                        throw new InvalidOperationException(); // TODO
+                        Logger.LogAppErrorAndThrow($"Cannot create transaction: book #{prototype.BookId} not found or user has no access to this book", 
+                                                   ApplicationError.BookNotFound);
                     }
 
                     if (bookUser.Role < BookUserRole.Member) {
-                        Logger.LogError($"Cannot create unit: permission denied for user {prototype.UserName}");
-                        throw new InvalidOperationException(); // TODO
+                        Logger.LogAppErrorAndThrow($"Cannot create unit: permission denied for user {prototype.UserName}", ApplicationError.PermissionDenied);
                     }
 
                     var transaction = new Transaction() {
@@ -59,6 +59,8 @@ namespace Finances.Services.Transactions {
 
                     await DataBase.SaveChangesAsync();
                     dbTransaction.Commit();
+
+                    return transaction;
                 }
                 catch (Exception) {
                     dbTransaction.Rollback();

@@ -23,18 +23,18 @@ namespace Finances.Test.Services {
         public void GetWallets() {
             var book = _bookStore.CreateBook("Admin").Result;
 
-            var wallet1 = _walletStore.CreateWallet(book.BookUser.BookId, "Wallet1", "Admin").Result.Wallet;
-            var wallet2 = _walletStore.CreateWallet(book.BookUser.BookId, "Wallet2", "Admin").Result.Wallet;
+            var wallet1 = _walletStore.CreateWallet(book.BookId, "Wallet1", "Admin").Result;
+            var wallet2 = _walletStore.CreateWallet(book.BookId, "Wallet2", "Admin").Result;
 
             Assert.Equal(1, Db.Books.Count());
             Assert.Equal(2, Db.Wallets.Count());
-            Assert.Equal(2, _walletStore.GetWallets("Admin", book.BookUser.BookId).Result.Length);
-            Assert.Equal(0, _walletStore.GetWallets("Member", book.BookUser.BookId).Result.Length);
+            Assert.Equal(2, _walletStore.GetWallets("Admin", book.BookId).Result.Length);
+            Assert.Equal(0, _walletStore.GetWallets("Member", book.BookId).Result.Length);
 
-            _bookStore.AddUser("Member", BookUserRole.Member, book.BookUser.BookId, "Admin").Wait();
+            _bookStore.AddUser("Member", BookUserRole.Member, book.BookId, "Admin").Wait();
 
-            Assert.Equal(2, _walletStore.GetWallets("Admin", book.BookUser.BookId).Result.Length);
-            Assert.Equal(2, _walletStore.GetWallets("Member", book.BookUser.BookId).Result.Length);
+            Assert.Equal(2, _walletStore.GetWallets("Admin", book.BookId).Result.Length);
+            Assert.Equal(2, _walletStore.GetWallets("Member", book.BookId).Result.Length);
         }
 
         [Fact(DisplayName = "Wallets service - creates a wallet")]
@@ -43,7 +43,7 @@ namespace Finances.Test.Services {
             Assert.Equal(0, Db.Wallets.Count());
 
             var book = _bookStore.CreateBook("Admin").Result;
-            var wallet = _walletStore.CreateWallet(book.BookUser.BookId, "Test", "Admin").Result.Wallet;
+            var wallet = _walletStore.CreateWallet(book.BookId, "Test", "Admin").Result;
 
             Assert.Equal(1, Db.Wallets.Count());
 

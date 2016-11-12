@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Finances.Data;
+using Finances.Exceptions;
 using Finances.Models;
 using Finances.Services.Books;
 using Finances.Services.Users;
+using Finances.Utils.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -31,24 +33,20 @@ namespace Finances.Services.Wallets {
             return wallets.ToArrayAsync();
         }
 
-        public async Task<CreateWalletResult> CreateWallet(int bookId, string walletName, string userName) {
+        public async Task<Wallet> CreateWallet(int bookId, string walletName, string userName) {
             var user = await UserStore.GetUser(userName);
             if (user == null) {
-                Logger.LogError($"User '{userName}' not found");
-                return new CreateWalletResult(CreateWalletErrorCode.UserNotFound);
+                Logger.LogAppErrorAndThrow($"User '{userName}' not found", ApplicationError.UserNotFound);
             }
 
             var bookUser = await BookStore.GetUserBook(userName, bookId);
             if (bookUser == null) {
-                Logger.LogError($"Cannot create wallet: book #{bookId} not found or user has no access to this book");
-                return new CreateWalletResult(CreateWalletErrorCode.BookNotFound);
+                Logger.LogAppErrorAndThrow($"Cannot create wallet: book #{bookId} not found or user has no access to this book", ApplicationError.BookNotFound);
             }
 
             if (bookUser.Role < BookUserRole.Member) {
-                Logger.LogError($"Cannot create unit: permission denied for user {userName}");
-                return new CreateWalletResult(CreateWalletErrorCode.PermissionDenied);
+                Logger.LogAppErrorAndThrow($"Cannot create unit: permission denied for user {userName}", ApplicationError.PermissionDenied);
             }
-
             
             var newWallet = new Wallet() {
                 Book = bookUser.Book,
@@ -58,7 +56,7 @@ namespace Finances.Services.Wallets {
             DataBase.Wallets.Add(newWallet);
             await DataBase.SaveChangesAsync();
 
-            return new CreateWalletResult(newWallet);
+            return newWallet;
         }
     }
 }

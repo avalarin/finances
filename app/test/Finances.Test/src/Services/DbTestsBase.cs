@@ -1,10 +1,7 @@
 using System;
 using Finances.Data;
-using Finances.Models;
 using Finances.Test.Utils;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Finances.Test.Services {
