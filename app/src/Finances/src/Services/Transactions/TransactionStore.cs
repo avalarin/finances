@@ -58,8 +58,14 @@ namespace Finances.Services.Transactions {
                     await PushTags(transaction, prototype);
                     PushOperations(transaction, prototype);
 
+                    DataBase.Transactions.Add(transaction);
                     await DataBase.SaveChangesAsync();
                     dbTransaction.Commit();
+
+                    Logger.LogInformation($"Transaction #{transaction.Id} has been created by user {prototype.UserName}");
+                    foreach (var op in transaction.Operations) {
+                        Logger.LogInformation($"Operation #{op.Id} has been created by user {prototype.UserName}");
+                    }
 
                     return transaction;
                 }
