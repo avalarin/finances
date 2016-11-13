@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Finances.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Finances.Services.Transactions;
-using Finances.WebModels.TransactionsModels;
+using Finances.Models.Prototypes;
+using Finances.Web;
 
 namespace Finances.Controllers {
     [Authorize]
@@ -15,19 +15,16 @@ namespace Finances.Controllers {
             _txnStore = txnStore;
         }
 
-        public Task<Transaction[]> Get(int bookId) {
-            return _txnStore.GetTransactions(bookId, User.Identity.Name);
+        public async Task<Response> Get(int bookId) {
+            var txns = await _txnStore.GetTransactions(bookId, User.Identity.Name);
+            return new PayloadResponse(new { txns });
         }
 
         [Route("create")]
-        public async Task<TransactionResponseModel<CreateTransactionStatus>> Post(TransactionPrototype model) {
+        public async Task<Response> Post(TransactionPrototype model) {
             var result = await _txnStore.CreateTransaction(model);
-
-            // if (!result.Success) {
-            //     return new TransactionResponseModel<CreateTransactionStatus>(CreateTransactionStatus.Failed);
-            // }
             
-            return new TransactionResponseModel<CreateTransactionStatus>(CreateTransactionStatus.Success);
+            return new Response();
         }
 
     }

@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Finances.Data;
-using Finances.Models;
-using Finances.WebModels.AccountsModels;
-using Microsoft.AspNetCore.Authentication;
+using Finances.Models.Responses;
+using Finances.Web;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Features.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -24,10 +22,10 @@ namespace Finances.Controllers {
         } 
 
         [HttpGet]
-        public async Task<User[]> Get() {
-            var users = await _database.Users.ToArrayAsync();
-
-            return users.Select(WebModels.AccountsModels.User.FromApplicationUser).ToArray();
+        public async Task<Response> Get() {
+            var users = (await _database.Users.ToArrayAsync())
+                                              .Select(u => new UserResponseModel(u));
+            return new PayloadResponse(new { users });
         } 
     }
 }

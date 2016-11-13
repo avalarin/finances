@@ -1,5 +1,4 @@
-﻿using System;
-using Finances.Data;
+﻿using Finances.Data;
 using Finances.Middlewares.Authentication;
 using Finances.Middlewares.Errors;
 using Finances.Models;
@@ -16,7 +15,6 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 

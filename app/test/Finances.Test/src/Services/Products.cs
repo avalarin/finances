@@ -6,9 +6,6 @@ using Finances.Services.Users;
 using Xunit;
 using Xunit.Abstractions;
 
-using static Xunit.Assert;
-using static Finances.Test.Utils.AssertErrors;
-
 namespace Finances.Test.Services {
     public class Products : DbTestsBase {
         private readonly BookStore _bookStore;

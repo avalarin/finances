@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Finances.Models;
+﻿using System.Threading.Tasks;
+using Finances.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Finances.Services.Wallets;
-using Finances.WebModels.WalletsModels;
+using Finances.Web;
 
 namespace Finances.Controllers {
     [Authorize]
@@ -17,19 +16,16 @@ namespace Finances.Controllers {
             _walletStore = walletStore;
         }
 
-        public async Task<IEnumerable<Wallet>> Post([FromBody]GetWalletsRequestModel model) {
-            return await _walletStore.GetWallets(User.Identity.Name, model.BookId);
+        public async Task<Response> Post([FromBody]GetWalletsRequestModel model) {
+            var wallets = await _walletStore.GetWallets(User.Identity.Name, model.BookId);
+            return new PayloadResponse(new { wallets });
         }
 
         [Route("create")]
-        public async Task<WalletResponseModel> Post([FromBody]CreateWalletRequestModel model) {
+        public async Task<Response> Post([FromBody]CreateWalletRequestModel model) {
             var result = await _walletStore.CreateWallet(model.BookId, model.WalletName, User.Identity.Name);
 
-            // if (!result.Success) {
-            //     return new WalletResponseModel(CreateWalletStatus.CannotCreate);
-            // }
-
-            return new WalletResponseModel();
+            return new Response();
         }
 
     }

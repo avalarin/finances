@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Finances.WebModels.WalletsModels {
+namespace Finances.Models.Requests {
     public class GetWalletsRequestModel {
         [Required]
         public int BookId { get; set; }

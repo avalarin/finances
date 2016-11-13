@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Finances.Web;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Finances.Controllers {
     [Route("api/about")]
     public class AboutController : Controller {
 
-        public object Get() {
-            return new {
-                version = "1"
-            };
+        public Response Get() {
+            var version = "1";
+            return new PayloadResponse(new { version });
         }
 
     }

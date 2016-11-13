@@ -1,7 +1,7 @@
 import { get, post, getBookId } from './core';
 
 export function load() {
-    return post('/api/wallet', { bookId: getBookId() });
+    return post('/api/wallet', { bookId: getBookId() }).then(r => r.wallets);
 }
 
 export function create(name) {

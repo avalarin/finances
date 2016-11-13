@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Finances.WebModels.SessionsModels {
+namespace Finances.Models.Requests {
     public class CreateSessionRequestModel {
-         
         [Required]
         [MaxLength(100)]
         public string UserName { get; set; }

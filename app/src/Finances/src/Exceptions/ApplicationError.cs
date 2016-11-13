@@ -6,6 +6,9 @@ namespace Finances.Exceptions {
         public static readonly ApplicationError BookNotFound = new ApplicationError("BookNotFound", "Book not found");
         public static readonly ApplicationError AlreadyExists = new ApplicationError("AlreadyExists", "Object already exists");
         public static readonly ApplicationError BookUserNotFound = new ApplicationError("BookUserNotFound", "Book user not found");
+        public static readonly ApplicationError Unauthenticated = new ApplicationError("Unauthenticated", "Unauthenticated");
+        public static readonly ApplicationError Failed = new ApplicationError("Failed", "Failed");
+        public static readonly ApplicationError InvalidNameOrPassword = new ApplicationError("InvalidNameOrPassword", "InvalidNameOrPassword");
 
         private ApplicationError(string name, string message) {
             Name = name;

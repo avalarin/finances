@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Finances.Models;
 using Finances.Services.Sessions;
