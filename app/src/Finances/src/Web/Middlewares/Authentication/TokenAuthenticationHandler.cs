@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Primitives;
 
-namespace Finances.Middlewares.Authentication {
+namespace Finances.Web.Middlewares.Authentication {
     public class TokenAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions> {
         private readonly ISessionStore _sessionStore;
         private readonly SignInManager<ApplicationUser> _signInManager;

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 
-namespace Finances.Middlewares.Errors {
+namespace Finances.Web.Middlewares.Errors {
     public static class HandleErrorsAppBuilderExtensions {
         public static IApplicationBuilder UseHandleErrorsMiddleware(this IApplicationBuilder app) {
             if (app == null) {

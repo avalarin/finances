@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Finances.Middlewares.Authentication {
+namespace Finances.Web.Middlewares.Authentication {
     public class TokenAuthenticationMiddleware : AuthenticationMiddleware<TokenAuthenticationOptions> {
         private readonly ISessionStore _sessionStore;
         private readonly SignInManager<ApplicationUser> _signInManager;

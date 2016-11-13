@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Finances.Middlewares.Errors {
+namespace Finances.Web.Middlewares.Errors {
     public class HandleErrorsMiddleware {
         private readonly RequestDelegate _next;
         private readonly HandleErrorsMiddlewareOptions _options;

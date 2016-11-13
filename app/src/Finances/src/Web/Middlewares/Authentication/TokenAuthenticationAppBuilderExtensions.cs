@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 
-namespace Finances.Middlewares.Authentication {
+namespace Finances.Web.Middlewares.Authentication {
     public static class TokenAuthenticationAppBuilderExtensions {
         public static IApplicationBuilder UseTokenAuthentication(this IApplicationBuilder app) {
             if (app == null) {

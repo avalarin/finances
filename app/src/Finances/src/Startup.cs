@@ -1,6 +1,6 @@
 ﻿using Finances.Data;
-using Finances.Middlewares.Authentication;
-using Finances.Middlewares.Errors;
+using Finances.Web.Middlewares.Authentication;
+using Finances.Web.Middlewares.Errors;
 using Finances.Models;
 using Finances.Services.Books;
 using Finances.Services.Sessions;
