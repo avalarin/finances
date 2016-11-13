@@ -5,6 +5,7 @@ using Finances.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 
 namespace Finances.Test.Utils {
@@ -12,8 +13,13 @@ namespace Finances.Test.Utils {
 
         public static ApplicationDbContext CreateDbContext(ILoggerFactory loggerFactory) {
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            dbContextOptionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            dbContextOptionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString())
+                                   .ConfigureWarnings((bldr) => {
+                                       bldr.Ignore(InMemoryEventId.TransactionIgnoredWarning);
+                                   });
+
             var dbContextOptions = dbContextOptionsBuilder.Options;
+
 
             using (var context = new ApplicationDbContext(dbContextOptions)) {
                 context.Database.EnsureDeleted();
