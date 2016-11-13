@@ -56,6 +56,8 @@ namespace Finances.Services.Wallets {
             DataBase.Wallets.Add(newWallet);
             await DataBase.SaveChangesAsync();
 
+            Logger.LogInformation($"Wallet #{newWallet.Id} has been created by user {userName}");
+
             return newWallet;
         }
     }

@@ -52,7 +52,7 @@ namespace Finances.Services.Units {
             DataBase.Units.Add(unit);
             await DataBase.SaveChangesAsync();
 
-            Logger.LogInformation($"Unit #${unit.Id} has been created by user {userName}");
+            Logger.LogInformation($"Unit #{unit.Id} has been created by user {userName}");
 
             return unit;
         }
